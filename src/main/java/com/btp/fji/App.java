@@ -31,7 +31,7 @@ public class App {
 
         HeatDissipatorService service = new HeatDissipatorService(heat, cond);
 
-        if(Objects.nonNull(iterations)) {
+        if (Objects.nonNull(iterations)) {
             service.run(iterations, false);
         } else {
             service.run(minDelta, false);
