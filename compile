@@ -1,0 +1,1 @@
+javac ./src/main/java/com/btp/fji/App.java ./src/main/java/com/btp/fji/util/Stencil.java ./src/main/java/com/btp/fji/util/PgmReader.java ./src/main/java/com/btp/fji/service/HeatDissipatorService.java
