@@ -1,0 +1,5 @@
+distributions {
+    main {
+        baseName = project.name
+        }
+    }
