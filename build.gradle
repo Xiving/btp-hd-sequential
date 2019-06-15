@@ -1,3 +1,12 @@
+plugins {
+    id 'java'
+    id 'distribution'
+}
+
+distZip.dependsOn jar
+distTar.dependsOn jar
+installDist.dependsOn jar
+
 distributions {
     main {
         baseName = project.name
