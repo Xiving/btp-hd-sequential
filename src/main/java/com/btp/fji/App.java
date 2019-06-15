@@ -2,11 +2,12 @@ package com.btp.fji;
 
 import com.btp.fji.service.HeatDissipatorService;
 import com.btp.fji.util.PgmReader;
+import java.io.IOException;
 import java.util.Objects;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Integer iterations = null;
         Double minDelta = null;
 
