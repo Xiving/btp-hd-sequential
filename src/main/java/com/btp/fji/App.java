@@ -49,7 +49,7 @@ public class App {
         }
 
         double[][] heat = PgmReader.getTempValues(fileDir, height, width);
-        double[][] cond = PgmReader.getTempValues(fileDir, height, width);
+        double[][] cond = PgmReader.getCondValues(fileDir, height, width);
 
         HeatDissipatorService service = new HeatDissipatorService(heat, cond);
         service.run(minDifference, false);
