@@ -51,7 +51,8 @@ public class HeatDissipatorService {
     }
 
     public void run(double minDifference, boolean verbose) {
-        System.out.println(this);
+        int i = 0;
+        //System.out.println(this);
         next();
 
         while(maxTempDifference() > minDifference) {
@@ -60,8 +61,10 @@ public class HeatDissipatorService {
             }
 
             next();
+            i++;
         }
 
+        System.out.println("Finished after iteration: " + i);
         System.out.println(this);
     }
 
