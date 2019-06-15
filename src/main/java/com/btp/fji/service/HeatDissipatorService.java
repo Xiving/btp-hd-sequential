@@ -114,7 +114,7 @@ public class HeatDissipatorService {
 
         for (int i = 1; i < current.height() - 1; i++) {
             for (int j = 1; j < current.width() - 1; j++) {
-                str.append(String.format("%16f  ", current.get(i, j)));
+                str.append(String.format("%6.2f  ", current.get(i, j)));
             }
             str.append('\n');
         }
