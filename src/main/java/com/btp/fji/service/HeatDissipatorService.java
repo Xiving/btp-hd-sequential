@@ -104,6 +104,7 @@ public class HeatDissipatorService {
             }
         }
 
+        System.out.println("Max difference: " + maxDifference);
         return maxDifference;
     }
 
