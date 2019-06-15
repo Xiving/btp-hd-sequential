@@ -1,5 +1,25 @@
+plugins {
+    id 'java'
+    id 'distribution'
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+distZip.dependsOn jar
+distTar.dependsOn jar
+installDist.dependsOn jar
+
 distributions {
     main {
         baseName = project.name
+        contents {
+            into('lib') {
+                from configurations.runtimeClasspath
+                from jar.archivePath
+            }
+        }
     }
 }
