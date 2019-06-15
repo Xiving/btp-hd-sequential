@@ -7,36 +7,52 @@ import java.util.Objects;
 
 public class App {
 
-    public static void main(String[] args) throws IOException {
-        Integer iterations = null;
-        Double minDelta = null;
+    public static void main(String[] args) throws Exception {
+        // Default config
+        String fileDir = null;
+        int nrExecutorsPerNode = 1;
+        double minDifference = 10;
+        int maxIterations = Integer.MAX_VALUE;
+        int height = 10;
+        int width = 10;
 
-        if (args.length != 4) {
-            System.err.println("Invalid amount of arguments");
-            System.exit(1);
+        // overwrite defaults with input arguments
+        for (int i = 0; i < args.length; i += 2) {
+            switch (args[i]) {
+                case "-f":
+                    fileDir = args[i + 1];
+                    break;
+                case "-e":
+                    nrExecutorsPerNode = Integer.parseInt(args[i + 1]);
+                    break;
+                case "-d":
+                    minDifference = Double.parseDouble(args[i + 1]);
+                    break;
+                case "-m":
+                    maxIterations = Integer.parseInt(args[i + 1]);
+                    break;
+                case "-h":
+                    height = Integer.parseInt(args[i + 1]);
+                    break;
+                case "-w":
+                    width = Integer.parseInt(args[i + 1]);
+                    break;
+                default:
+                    throw new Error("Usage: java HeatDissipatorApp "
+                        + " -f fileDir "
+                        + "[ -e <nrOfExecutors> ]"
+                        + "[ -d <minDelta> ]"
+                        + "[ -m <maxIteration> ]"
+                        + "[ -h <height> ]"
+                        + "[ -w <width> ]");
+            }
         }
 
-        String option = args[2];
-
-        if (option.equals("-m")) {
-            minDelta = Double.parseDouble(args[3]);
-        } else if (option.equals("-i")) {
-            iterations = Integer.parseInt(args[3]);
-        } else {
-            System.err.println("Valid end condition missing");
-            System.exit(1);
-        }
-
-        double[][] heat = PgmReader.read(args[0]);
-        double[][] cond = PgmReader.read(args[1]);
+        double[][] heat = PgmReader.getTempValues(args[0], height, width);
+        double[][] cond = PgmReader.getTempValues(args[1], height, width);
 
         HeatDissipatorService service = new HeatDissipatorService(heat, cond);
-
-        if (Objects.nonNull(iterations)) {
-            service.run(iterations, false);
-        } else {
-            service.run(minDelta, false);
-        }
+        service.run(minDifference, false);
     }
 
 }

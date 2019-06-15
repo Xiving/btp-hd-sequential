@@ -1,38 +1,64 @@
 package com.btp.fji.util;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class PgmReader {
 
-  public static double[][] read(String fileName) throws IOException {
+  private static final String TEMP = "plasma";
+  private static final String COND = "pat2";
+
+  public static double[][] getTempValues(String fileDir, int height, int width) {
+    try {
+      return read(fileDir + TEMP, height, width, 100, 100);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  public static double[][] getCondValues(String fileDir, int height, int width) {
+    try {
+      return read(fileDir + COND, height, width, 0, 1);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  private static double[][] read(String fileDir, int height, int width, int min, int max) throws IOException {
     double[][] matrix;
+    String fileName = String.format("%s_%dx%d.pgm", fileDir, height, width);
+
+    System.out.println("Reading file from dir: " + fileDir);
 
     BufferedReader br = openBufferedReader(fileName);
 
-    br.readLine(); // ignore P2
+    br.readLine(); // ignore "P2"?
     StringTokenizer dimensions = new StringTokenizer(br.readLine());
-    int height = Integer.parseInt(dimensions.nextToken());
-    int width = Integer.parseInt(dimensions.nextToken());
-    double maxValue = Double.parseDouble(br.readLine());
+    height = Integer.parseInt(dimensions.nextToken());
+    width = Integer.parseInt(dimensions.nextToken());
+    double maxValue = Double.parseDouble(br.readLine()); // ignore max heat
 
+    int x = 0;
+    int y = 0;
     matrix = new double[height][width];
 
-    try { // read values
-      for (int i = 0; i < height; i++) {
-        StringTokenizer row = new StringTokenizer(br.readLine());
+    do {
+      StringTokenizer row = new StringTokenizer(br.readLine());
 
-        for (int j = 0; j < width; j++) {
-          matrix[i][j] = Double.parseDouble(row.nextToken()) / maxValue;
+      while (row.hasMoreTokens()) {
+        matrix[y][x] = min + Double.parseDouble(row.nextToken()) * (max - min) / maxValue;
+        x++;
+
+        if (x == width) {
+          x = 0;
+          y++;
         }
       }
-    } catch (IOException e) {
-      System.err.println("Invalid double found!");
-      System.exit(1);
-    }
+    } while (y < height);
 
     return matrix;
   }
@@ -41,11 +67,22 @@ public class PgmReader {
     try {
       return new BufferedReader(new FileReader(fileName));
     } catch (FileNotFoundException e) {
-      System.err.println("Could not open buffered reader!");
-      System.exit(1);
+      e.printStackTrace();
     }
 
     return null; // ignore
   }
 
+//    private static Reader getResourceReader(String fileName) throws FileNotFoundException {
+//        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+//        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+//
+//        if (Objects.isNull(inputStream)) {
+//            throw new FileNotFoundException(String.format("File '{}' not found", fileName));
+//        }
+//
+//        return new InputStreamReader(inputStream);
+//    }
+
 }
+
