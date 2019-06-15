@@ -10,5 +10,11 @@ installDist.dependsOn jar
 distributions {
     main {
         baseName = project.name
+        contents {
+            into('lib') {
+                from configurations.runtimeClasspath
+                from jar.archivePath
+            }
         }
     }
+}
