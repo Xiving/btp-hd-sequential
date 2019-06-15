@@ -87,8 +87,8 @@ public class HeatDissipatorService {
         double restW = 1 - w;
 
         return current.get(i, j) * w +
-            current.sumDirectCells(i, j) * (restW * DIRECT_CONST) +
-            current.sumDiagonalCells(i, j) * (restW * DIAGONAL_CONST);
+            current.sumDirectCells(i, j) * restW * DIRECT_CONST +
+            current.sumDiagonalCells(i, j) * restW * DIAGONAL_CONST;
     }
 
     private double maxTempDifference() {

@@ -27,8 +27,8 @@ public class Stencil {
     public void addEmptyRingAroundMatrix() {
         double[][] donut = new double[stencil.length + 2][stencil[0].length + 2];
 
-        for (int i = 0; i < donut.length - 2; i++) {
-            for (int j = 0; j < donut[i].length - 2; j++) {
+        for (int i = 0; i < stencil.length; i++) {
+            for (int j = 0; j < stencil[i].length; j++) {
                 donut[i + 1][j + 1] = stencil[i][j];
             }
         }
