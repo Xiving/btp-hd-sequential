@@ -8,49 +8,44 @@ import java.util.StringTokenizer;
 
 public class PgmReader {
 
-    public static double[][] read(String fileName) {
-        int height = 0;
-        int width = 0;
-        double[][] matrix;
+  public static double[][] read(String fileName) throws IOException {
+    double[][] matrix;
 
-        BufferedReader br = openBufferedReader(fileName);
+    BufferedReader br = openBufferedReader(fileName);
 
-        try { // read dimensions
-            StringTokenizer dimensions = new StringTokenizer(br.readLine());
-            height = Integer.parseInt(dimensions.nextToken());
-            width = Integer.parseInt(dimensions.nextToken());
-        } catch (IOException e) {
-            System.err.println("Invalid integer found!");
-            System.exit(1);
+    br.readLine(); // ignore P2
+    StringTokenizer dimensions = new StringTokenizer(br.readLine());
+    int height = Integer.parseInt(dimensions.nextToken());
+    int width = Integer.parseInt(dimensions.nextToken());
+    double maxValue = Double.parseDouble(br.readLine());
+
+    matrix = new double[height][width];
+
+    try { // read values
+      for (int i = 0; i < height; i++) {
+        StringTokenizer row = new StringTokenizer(br.readLine());
+
+        for (int j = 0; j < width; j++) {
+          matrix[i][j] = Double.parseDouble(row.nextToken()) / maxValue;
         }
-
-        matrix = new double[height][width];
-
-        try { // read values
-            for (int i = 0; i < height; i++) {
-                StringTokenizer row = new StringTokenizer(br.readLine());
-
-                for (int j = 0; j < width; j++) {
-                    matrix[i][j] = Double.parseDouble(row.nextToken());
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Invalid double found!");
-            System.exit(1);
-        }
-
-        return matrix;
+      }
+    } catch (IOException e) {
+      System.err.println("Invalid double found!");
+      System.exit(1);
     }
 
-    private static BufferedReader openBufferedReader(String fileName) {
-        try {
-            return new BufferedReader(new FileReader(fileName));
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not open buffered reader!");
-            System.exit(1);
-        }
+    return matrix;
+  }
 
-        return null; // ignore
+  private static BufferedReader openBufferedReader(String fileName) {
+    try {
+      return new BufferedReader(new FileReader(fileName));
+    } catch (FileNotFoundException e) {
+      System.err.println("Could not open buffered reader!");
+      System.exit(1);
     }
+
+    return null; // ignore
+  }
 
 }

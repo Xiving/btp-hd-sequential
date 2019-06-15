@@ -26,8 +26,8 @@ public class App {
             System.exit(1);
         }
 
-        double[][] heat = PgmReader.read(System.class.getResource("/" + args[0]).getPath());
-        double[][] cond = PgmReader.read(System.class.getResource("/" + args[1]).getPath());
+        double[][] heat = PgmReader.read(args[0]);
+        double[][] cond = PgmReader.read(args[1]);
 
         HeatDissipatorService service = new HeatDissipatorService(heat, cond);
 
