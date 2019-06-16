@@ -69,8 +69,8 @@ public class HeatDissipatorService {
     }
 
     private void next() {
-        for (int i = 1; i < current.height() - 2; i++) {
-            for (int j = 1; j < current.width() - 2; j++) {
+        for (int i = 1; i < current.height() - 1; i++) {
+            for (int j = 1; j < current.width() - 1; j++) {
                 next.set(i, j, nextTemp(i, j));
             }
         }
