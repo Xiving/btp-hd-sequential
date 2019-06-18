@@ -1,6 +1,7 @@
 package com.btp.fji.service;
 
 import com.btp.fji.util.Stencil;
+import java.time.Duration;
 
 public class HeatDissipatorService {
 
@@ -52,6 +53,7 @@ public class HeatDissipatorService {
 
     public void run(double minDifference, boolean verbose) {
         int i = 0;
+        long start = System.currentTimeMillis();
         //System.out.println(this);
         next();
         double maxDifference = maxTempDifference();
@@ -67,7 +69,7 @@ public class HeatDissipatorService {
             i++;
         }
 
-        System.out.println("Finished after iteration: " + i);
+        System.out.println(String.format("Finished after %d iterations and %d ms", i, System.currentTimeMillis() - start));
     }
 
     private void next() {
