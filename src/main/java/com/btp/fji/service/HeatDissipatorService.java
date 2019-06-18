@@ -68,7 +68,6 @@ public class HeatDissipatorService {
         }
 
         System.out.println("Finished after iteration: " + i);
-        System.out.println(this);
     }
 
     private void next() {
