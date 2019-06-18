@@ -56,16 +56,13 @@ public class HeatDissipatorService {
         long start = System.currentTimeMillis();
         //System.out.println(this);
         next();
+        i++;
+
         double maxDifference = maxTempDifference();
-
         while(maxDifference > minDifference) {
-            if(verbose) {
-                System.out.println(this);
-            }
-
+            System.out.println("Max difference: " + maxDifference +", iteration: " + i);
             next();
             maxDifference = maxTempDifference();
-            System.out.println("Max difference: " + maxDifference +", iteration: " + i);
             i++;
         }
 
